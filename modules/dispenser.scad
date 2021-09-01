@@ -5,12 +5,12 @@ include<tube.scad>;
  * Modules *
  ***********/
 module dispenser() {
-    tie_outer_radius = opening_size / 2; // radius of the tie part - forced by case.scad
+    tie_outer_radius = opening_size / 2; // radius of the tie part - forced by spinner_case.scad
     tie_tube_thickness = thickness / 2; // thickness of the tie part
-    outer_radius = tie_outer_radius + thickness; // global radius - forced by case.scad
+    outer_radius = tie_outer_radius + thickness; // global radius - forced by spinner_case.scad
     inner_radius = tie_outer_radius - tie_tube_thickness;
     // tie to the spring container
-    tube(tie_length, inner_radius, tie_outer_radius - inner_radius);
+    tube(tie_length, inner_radius, tie_tube_thickness);
     tie(tie_length, tie_outer_radius, tie_thickness);
     // curved slop
     translate([0, 0, -1]) { // reclaim the heigth of the first cylinder

@@ -69,12 +69,17 @@ main_case_back_height = 230;
 main_case_lower_depth = 100;
 main_case_upper_depth = 20;
 
+// dimensions for the from foot (for stability)
+foot_height = 20;
+foot_length = 100;
+
 // back door
 back_door_thickness = thickness;
 back_door_height = main_case_back_height + 20;
 
 // floor plates
 floor_thickness = thickness;
+floor_length = 90;
 
 // supports for the arduino
 arduino_support_height = 5;
@@ -84,6 +89,19 @@ arduino_support_axis_radius = 1.5;
 
 // Height where to place the center of the spinner
 spinner_height = 120;
+
+// dimensions of the push button
+button_radius = 3.5;
+button_width = 11.5;
+button_groove = thickness - 0.5;
+
+// dimensions of the LED
+led_radius = 2;
+led_feet_width = 1;
+led_groove = thickness / 2;
+
+// distance between push button & led
+control_panel_interval = 20;
 
 
 /*
