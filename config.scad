@@ -41,6 +41,8 @@ thickness = 2;
 
 // tie length
 tie_length = 10;
+tie_thickness = thickness / 2;
+
 
 /*
  * Motor
@@ -54,3 +56,42 @@ motor_radius = 12;
 
 // length of the motor
 motor_length = 20;
+
+
+/*
+ * Main case
+ */
+
+// dimensions
+main_case_width = 140;
+main_case_front_height = 150;
+main_case_back_height = 230;
+main_case_lower_depth = 100;
+main_case_upper_depth = 20;
+
+// back door
+back_door_thickness = thickness;
+back_door_height = main_case_back_height + 20;
+
+// floor plates
+floor_thickness = thickness;
+
+// supports for the arduino
+arduino_support_height = 5;
+arduino_support_radius = 6;
+arduino_support_axis_height = 3;
+arduino_support_axis_radius = 1.5;
+
+// Height where to place the center of the spinner
+spinner_height = 120;
+
+
+/*
+ * Food container
+ */
+
+// dimensions
+food_container_width = main_case_width;
+food_container_depth = food_container_width;
+food_container_slope_height = 100;
+food_container_extension_height = 100;

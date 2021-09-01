@@ -49,3 +49,12 @@ module tie_r(h, r, thick) {
     // use a L with the vertical bar larger
     tie_with(h, r, thick) rotate([0, -90, 0]) linear_extrude(r + 2 * thick) L(h, L_detach);
 }
+
+// module to create a strait tie
+module strait_tie(h, thick) {
+    rotate([180, -90, 0]) linear_extrude(thick)
+        hull() {
+            translate([L_width / 2, 0, 0]) square(L_width, center=true);
+            translate([h - L_width / 2, 0, 0]) circle(L_width / 2);
+        }
+}
