@@ -1,5 +1,5 @@
 include<config.scad>;
-include<modules/case.scad>;
+include<modules/spinner_case.scad>;
 
 /*************
  * 3D Models *

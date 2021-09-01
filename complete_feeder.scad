@@ -1,6 +1,6 @@
 include<config.scad>;
 include<modules/screw.scad>;
-include<modules/case.scad>;
+include<modules/spinner_case.scad>;
 include<modules/dispenser.scad>;
 include<modules/food_container.scad>;
 
