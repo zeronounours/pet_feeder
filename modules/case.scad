@@ -1,4 +1,5 @@
 include<tie.scad>;
+include<tube.scad>;
 
 /***************
  * Computation *
@@ -12,18 +13,6 @@ tube_radius = opening_size / 2;
 /***********
  * Modules *
  ***********/
- module tube (h, inner_r, thick, closed=false) {
-     difference() {
-         cylinder(h, r=inner_r + thick);
-         if(closed) {
-             translate([0, 0, -1]) cylinder(h + 1 - thick, r=inner_r);
-
-         } else {
-            translate([0, 0, -1]) cylinder(h + 2, r=inner_r);
-         }
-     }
- }
-
 // module for the openings
 module openings(tie_length, inner_r, tube_r, thick) {
     difference() {
