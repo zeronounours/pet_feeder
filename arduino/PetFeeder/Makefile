@@ -164,11 +164,10 @@ requirements:
 	@if [ -e requirements.txt ]; \
 	then while read -r i ; do echo ; \
 	  options=""; \
-	  if [ "$$i" = http* ]; then \
-	    options="--git-url"; \
-	  elif [ "$$i" = /*.zip ]; then \
-	    options="--zip-path"; \
-	  fi; \
+	  case "$$i" in \
+	    http*) options="--git-url";; \
+	    *.zip) options="--zip-path";; \
+	  esac; \
 	  echo "---> Installing " '"'$$i'"' ; \
 	  arduino-cli lib install $$options "$$i" ; \
 	done < requirements.txt ; \
