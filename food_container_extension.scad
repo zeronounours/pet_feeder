@@ -5,4 +5,4 @@ include<modules/food_container.scad>;
 /*************
  * 3D Models *
  *************/
-food_container_extension();
+food_container_extension(true);

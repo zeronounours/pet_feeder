@@ -44,19 +44,24 @@ module food_container() {
         }
     }
 }
-module food_container_extension() {
+module food_container_extension(with_pin=false) {
     tie_tube_thickness = thickness / 2; // thickness of the male tie part
 
     // extension part
     translate([0, 0, -food_container_extension_height / 2]) {
         difference() {
             cube([food_container_width, food_container_depth, food_container_extension_height], center=true);
-            cube([food_container_width - 2 * thickness, food_container_depth - 2 * thickness, food_container_extension_height], center=true);
+            cube([food_container_width - 2 * thickness, food_container_depth - 2 * thickness, food_container_extension_height + 1], center=true);
             translate([0, 0, -food_container_extension_height / 2]) {
                 translate([food_container_width / 2 - thickness, 0, 0]) strait_tie(tie_length, tie_thickness);
                 rotate([0, 0, 180]) translate([food_container_width / 2 - thickness, 0, 0]) strait_tie(tie_length, tie_thickness);
                 translate([0, food_container_depth / 2 - thickness, 0]) rotate([0, 0, 90]) strait_tie(tie_length, tie_thickness);
                 rotate([0, 0, 180]) translate([0, food_container_depth / 2 - thickness, 0]) rotate([0, 0, 90]) strait_tie(tie_length, tie_thickness);
+            }
+
+            // Add the hole for pin if needed
+            if (with_pin) {
+                translate([0, food_container_depth / 2, 0]) rotate([90, 0, 0]) cylinder(thickness, r=pin_radius);
             }
         }
     }
@@ -71,8 +76,7 @@ module food_container_extension() {
     translate([0, 0, tie_length / 2]) {
         difference() {
             cube([food_container_width - 2 * thickness, food_container_depth - 2 * thickness, tie_length], center=true);
-            cube([food_container_width - 2 * thickness - 2 * tie_tube_thickness, food_container_depth - 2 * thickness - 2 * tie_tube_thickness, tie_length], center=true);
+            cube([food_container_width - 2 * thickness - 2 * tie_tube_thickness, food_container_depth - 2 * thickness - 2 * tie_tube_thickness, tie_length + 1], center=true);
         }
     }
-
 }

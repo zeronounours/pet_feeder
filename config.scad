@@ -113,3 +113,8 @@ food_container_width = main_case_width;
 food_container_depth = food_container_width;
 food_container_slope_height = 100;
 food_container_extension_height = 100;
+
+/*
+ * Pin
+ */
+pin_radius = 1;

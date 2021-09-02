@@ -1,2 +1,3 @@
 *.stl
+!vendor/*.stl
 *.sw[op]
