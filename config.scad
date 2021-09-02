@@ -34,7 +34,12 @@ step = 5;
  */
 
 // Size of the hole for food input/output
+// It also define the size for the tube
 opening_size = 40;
+
+// Additional tube height: height added after the input hole (to prevent
+// the spinner being stuck)
+spinner_case_add_height = 40;
 
 // thickness of sides
 thickness = 2;
