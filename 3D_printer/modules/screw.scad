@@ -1,3 +1,5 @@
+include<motor.scad>;
+
 /***************
  * Computation *
  ***************/
@@ -135,7 +137,7 @@ module screw() {
     translate([0, 0, wire_radius]) spring(radius, wire_radius, coils, real_pitch, step=step);
     difference() {
         cylinder(attach_length, r=radius);
-        translate([0, 0, -1]) cylinder(attach_length + 2, r=motor_axis_rad);
+        translate([0, 0, -1]) motor(axis_length=attach_length + 2);
 
     }
 }
