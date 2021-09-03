@@ -48,14 +48,6 @@ module main_case() {
                 tube(tie_length, inner_radius, tie_tube_thickness);
                 tie(tie_length, tie_outer_radius, tie_thickness);
             }
-
-            // motor case
-            translate([0, main_case_lower_depth - thickness, spinner_height]) rotate([90, 0, 0]) {
-                difference() {
-                    tube(motor_length, motor_radius, thickness);
-                    cube([2 * (motor_radius + 2 * thickness), motor_radius / 2, spinner_height], center=true);
-                }
-            }
         }
 
         // motor axis hole
@@ -79,4 +71,34 @@ module main_case() {
         translate([control_panel_interval / 2, control_panel_y_offset, main_case_back_height - led_groove]) cylinder(led_groove, r=led_radius);
         translate([-led_radius + control_panel_interval / 2, control_panel_y_offset - led_feet_width / 2, main_case_back_height - thickness]) cube([2 * led_radius, led_feet_width, thickness]);
     }
+}
+
+// Lower part of the main case
+module lower_main_case() {
+    difference() {
+        intersection() {
+            main_case();
+            translate([-main_case_width / 2 - 1, -1, -1]) cube([main_case_width + 2, main_case_lower_depth + foot_length + tie_length + 2, main_case_split_height + 1]);
+        }
+        // tie
+        translate([main_case_width / 2 - thickness, main_case_lower_depth / 2, main_case_split_height]) rotate([180, 0, 0]) strait_tie(tie_length, tie_thickness);
+        translate([-main_case_width / 2 + thickness, main_case_lower_depth / 2, main_case_split_height]) rotate([180, 0, 180]) strait_tie(tie_length, tie_thickness);
+    }
+}
+
+// Upper part of the main case
+module upper_main_case() {
+    tie_support_thickness = thickness / 2; // thickness of the tie support
+    tie_support_width = tie_length * 2; // width of the tie support
+
+    intersection() {
+        main_case();
+        translate([-main_case_width / 2 - 1, -1, main_case_split_height]) cube([main_case_width + 2, main_case_lower_depth + foot_length + tie_length + 2, main_case_back_height + 1]);
+    }
+    // tie
+    translate([main_case_width / 2 - thickness, main_case_lower_depth / 2, main_case_split_height]) rotate([180, 0, 0]) strait_tie(tie_length, tie_thickness);
+    translate([-main_case_width / 2 + thickness, main_case_lower_depth / 2, main_case_split_height]) rotate([180, 0, 180]) strait_tie(tie_length, tie_thickness);
+    // supports for tie
+    translate([main_case_width / 2 - thickness, main_case_lower_depth / 2 - tie_support_width / 2, main_case_split_height + tie_length]) rotate([180, 0, 180]) cube([tie_support_thickness, tie_support_width, 2 * tie_length]);
+    translate([-main_case_width / 2 + thickness, main_case_lower_depth / 2 + tie_support_width / 2, main_case_split_height + tie_length]) rotate([180, 0, 0]) cube([tie_support_thickness, tie_support_width, 2 * tie_length]);
 }

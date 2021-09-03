@@ -80,6 +80,9 @@ main_case_back_height = 230;
 main_case_lower_depth = 100;
 main_case_upper_depth = 20;
 
+// height where the main case must be splitted (to ease printing)
+main_case_split_height = 60;
+
 // dimensions for the from foot (for stability)
 foot_height = 20;
 foot_length = 100;
