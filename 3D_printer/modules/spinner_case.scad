@@ -7,7 +7,6 @@ include<tube.scad>;
 /*
  * spring container
  */
-tube_length = (spring_length + attach_length + thickness) * 1.1;
 tube_radius = opening_size / 2;
 
 /***********

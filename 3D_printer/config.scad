@@ -8,6 +8,8 @@
 // Resolution
 $fn = 40;
 
+// thickness of sides
+thickness = 2;
 
 /*
  * Spinner
@@ -37,12 +39,12 @@ step = 5;
 // It also define the size for the tube
 opening_size = 40;
 
+// Length for the spinner case
+tube_length = (spring_length + attach_length + thickness) * 1.1;
+
 // Additional tube height: height added after the input hole (to prevent
 // the spinner being stuck)
 spinner_case_add_height = 40;
-
-// thickness of sides
-thickness = 2;
 
 // tie length
 tie_length = 10;
