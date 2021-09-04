@@ -60,13 +60,16 @@ motor_axis_rad = 1.5;
 // width of the flat part of the motor axis (type D)
 motor_axis_flat_w = 2;
 
-// width of the motor (distance between the 2 flat parts)
-motor_width = 15;
-// height of the motor (considering the motor is horizontally placed)
-motor_height = 20;
+// height of the motor (distance between the 2 flat edges)
+motor_height = 10.5;
+// width of the motor (distance between the 2 curved edges)
+motor_width = 12.5;
 
 // length of the motor
-motor_length = 30;
+motor_length = 15;
+
+// length of the reduction gearbox
+reduction_length = 10;
 
 
 /*
