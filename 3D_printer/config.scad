@@ -16,14 +16,14 @@ thickness = 2;
  */
 
 // radius for the spinner (inner and outer)
-external_radius = 35 / 2;
-internal_radius = 20 / 2;
+external_radius = 55 / 2;
+internal_radius = 30 / 2;
 
 // pitch - distance between coils (real opening)
 pitch = 25;
 
 // length of the spring part
-spring_length = 100;
+spring_length = 140;
 // length of the attach part
 attach_length = 20;
 
@@ -37,10 +37,10 @@ step = 5;
 
 // Size of the hole for food input/output
 // It also define the size for the tube
-opening_size = 40;
+opening_size = 60;
 
 // Length for the spinner case
-tube_length = (spring_length + attach_length + thickness) * 1.1;
+tube_length = spring_length + attach_length + thickness + opening_size / 2;
 
 // Additional tube height: height added after the input hole (to prevent
 // the spinner being stuck)
@@ -75,37 +75,22 @@ reduction_length = 10;
 /*
  * Main case
  */
+// length of the bonds
+main_case_tie_length = 5;
 
 // dimensions
 main_case_width = 140;
-main_case_front_height = 150;
-main_case_back_height = 230;
-main_case_lower_depth = 100;
-main_case_upper_depth = 20;
+main_case_depth = 100;
+main_case_height = opening_size + 2 * thickness;
 
-// height where the main case must be splitted (to ease printing)
-main_case_split_height = 60;
-
-// dimensions for the from foot (for stability)
-foot_height = 20;
-foot_length = 100;
-
-// back door
-back_door_thickness = thickness;
-back_door_height = main_case_back_height + 20;
-
-// floor plates
-floor_thickness = thickness;
-floor_length = 90;
+// radius for the central hole
+main_case_hole_radius = 5;
 
 // supports for the arduino
 arduino_support_height = 5;
 arduino_support_radius = 6;
 arduino_support_axis_height = 3;
 arduino_support_axis_radius = 1.5;
-
-// Height where to place the center of the spinner
-spinner_height = 120;
 
 // dimensions of the push button
 button_radius = 3.5;

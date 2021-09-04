@@ -11,7 +11,7 @@ radius = (internal_radius + external_radius) / 2;
  // radius of wire
 wire_radius = (external_radius - internal_radius) / 2;
 // pitch of spring - real distance betweens coil centers
-real_pitch = pitch + wire_radius;
+real_pitch = pitch + 2 * wire_radius;
 // number of coils
 coils = (spring_length + attach_length) / real_pitch;
 

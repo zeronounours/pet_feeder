@@ -1,12 +1,11 @@
 include<config.scad>;
 include<modules/main_case.scad>;
 
-SPLIT_PARTS = 0;
-SHOW_LOWER = 1;
-SHOW_UPPER = 1;
+WITH_HOLE = true;
+WITH_MOTOR_TIE = false;
+WITH_CONTROL_PANEL = false;
 
 /*************
  * 3D Models *
  *************/
-if (SHOW_LOWER) lower_main_case();
-if (SHOW_UPPER) translate([0, 0, SPLIT_PARTS * 30]) upper_main_case();
+main_case(WITH_HOLE, WITH_CONTROL_PANEL, WITH_MOTOR_TIE);

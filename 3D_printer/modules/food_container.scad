@@ -73,10 +73,8 @@ module food_container_extension(with_pin=false) {
     rotate([0, 0, 180]) translate([0, food_container_depth / 2 - thickness, 0]) rotate([0, 0, 90]) strait_tie(tie_length, tie_thickness);
 
     // support for the male tie
-    translate([0, 0, tie_length / 2]) {
-        difference() {
-            cube([food_container_width - 2 * thickness, food_container_depth - 2 * thickness, tie_length], center=true);
-            cube([food_container_width - 2 * thickness - 2 * tie_tube_thickness, food_container_depth - 2 * thickness - 2 * tie_tube_thickness, tie_length + 1], center=true);
-        }
+    difference() {
+        cube([food_container_width - 2 * thickness, food_container_depth - 2 * thickness, 2 * tie_length], center=true);
+        cube([food_container_width - 2 * thickness - 2 * tie_tube_thickness, food_container_depth - 2 * thickness - 2 * tie_tube_thickness, 2 * tie_length + 1], center=true);
     }
 }

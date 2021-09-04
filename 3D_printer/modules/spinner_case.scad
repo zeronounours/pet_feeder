@@ -74,5 +74,5 @@ module spring_container() {
         }
     }
     // output attach
-    translate([0, 0, output_z]) rotate([-90, 0, 0]) openings(tie_length, opening_size / 2, tube_radius, thickness);
+    translate([0, 0, output_z]) rotate([-90, 0, 0]) openings(tie_length, opening_size / 2, tube_radius, thickness, -tie_length);
 }
