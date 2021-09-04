@@ -1,5 +1,6 @@
 include<tie.scad>;
 include<tube.scad>;
+include<motor_case.scad>;
 
 /***********
  * Modules *
@@ -52,6 +53,9 @@ module main_case() {
 
         // motor axis hole
         translate([0, main_case_lower_depth - 1.5 * thickness, spinner_height]) rotate([-90, 0, 0]) cylinder(2 * thickness, r=motor_axis_rad * 1.5);
+
+        // motor case holes
+        translate([0, main_case_lower_depth - thickness, spinner_height]) rotate([90, 0, 0]) motor_case();
 
         // back door holes
         translate([-(main_case_width - 2 * thickness) / 2, 0, thickness]) cube([main_case_width - 2 * thickness, thickness, main_case_back_height]);

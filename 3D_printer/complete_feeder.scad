@@ -5,12 +5,13 @@ include<modules/dispenser.scad>;
 include<modules/food_container.scad>;
 include<modules/main_case.scad>;
 include<modules/pin.scad>;
+include<modules/motor_case.scad>;
+include<modules/motor.scad>;
 
 /*************
  * 3D Models *
  *************/
 color("blue") screw();
-translate([-12, 0, 30]) food();
 color("yellow") spring_container();
 color("red") translate([0, tie_length + tube_radius, tube_length - opening_size / 2 - thickness]) rotate([90, 0, 0]) dispenser();
 translate([0, -tube_radius - spinner_case_add_height - thickness, 0]) {
@@ -22,3 +23,8 @@ color("white") translate([0, spinner_height, -main_case_lower_depth]) rotate([90
     lower_main_case();
     upper_main_case();
 }
+color("purple") rotate([180, 0, 0]) motor_case();
+
+// Decoration
+translate([-12, 0, 30]) food();
+%motor();
