@@ -5,23 +5,32 @@ include<motor_case.scad>;
 /***********
  * Modules *
  ***********/
-module main_case(with_hole=false, with_control_panel=false, with_motor=false) {
-    module base_shape() {
-        translate([0, 0, main_case_height / 2]) difference() {
-            cube([main_case_width, main_case_depth, main_case_height], center=true);
-            cube([main_case_width - 2 * thickness, main_case_depth - 2 * thickness, main_case_height + 1], center=true);
-        }
-        translate([0, 0, main_case_height + (main_case_tie_length + thickness) / 2 - thickness]) difference() {
-            cube([main_case_width - 2 * thickness, main_case_depth - 2 * thickness, main_case_tie_length + thickness], center=true);
-            translate([0, 0, - thickness]) cube([main_case_width - 4 * thickness, main_case_depth - 4 * thickness, main_case_tie_length + thickness], center=true);
-        }
+module rounded_cube(d, r, center=false) {
+    minkowski() {
+        cube([d.x - 2 * r, d.y - 2 * r, d.z / 2], center=center);
+        // use a different cylinder, depending on whether it is centered
+        if (center) cylinder(d.z / 2, r=r, center=center);
+        else translate([r, r, 0]) cylinder(d.z / 2, r=r);
     }
+}
+module main_case_base_shape(height, with_floor=true) {
+    floor_coef = with_floor ? 1: 0;
+    translate([0, 0, height / 2]) difference() {
+        rounded_cube([main_case_width, main_case_depth, height], r=main_case_corner_radius, center=true);
+        rounded_cube([main_case_width - 2 * thickness, main_case_depth - 2 * thickness, height + 1], r=main_case_corner_radius, center=true);
+    }
+    translate([0, 0, thickness - (main_case_tie_length + thickness) / 2]) difference() {
+        rounded_cube([main_case_width - 2 * thickness, main_case_depth - 2 * thickness, main_case_tie_length + thickness], r=main_case_corner_radius, center=true);
+        translate([0, 0, floor_coef * (-thickness - 1)]) rounded_cube([main_case_width - 4 * thickness, main_case_depth - 4 * thickness, main_case_tie_length + thickness + 1], r=main_case_corner_radius, center=true);
+    }
+}
+module main_case(with_hole=false, with_control_panel=false, with_motor=false) {
 
     // top of the main case (z direction)
     top = main_case_height + main_case_tie_length;
 
     difference() {
-        base_shape();
+        base_shape(main_case_height, false);
 
         // middle holes
         if (with_hole) cylinder(top + 1, r=main_case_hole_radius);

@@ -1,13 +1,7 @@
 include<tie.scad>;
 include<tube.scad>;
-
-/***************
- * Computation *
- ***************/
-/*
- * spring container
- */
-tube_radius = opening_size / 2;
+include<main_case.scad>;
+include<motor.scad>;
 
 /***********
  * Modules *
@@ -24,55 +18,71 @@ module openings(tie_length, inner_r, tube_r, thick, add_height=0) {
 }
 
 // spring container
-module spring_container() {
-    // Variables for the container
-    input_z = attach_length + opening_size / 2;
-    output_z = tube_length - opening_size / 2 - thickness;
+module spinner_case() {
+    // height of the case
+    case_height = 2 * tube_radius + spinner_case_add_height + thickness;
 
     difference() {
-        // main shape for the container - it is a 2 level pipe, like:
-        //
-        //        +-------------+
-        //        |             |
-        //   +----+.............|
-        //   |                  |
-        //   +------------------+
-        //
         union() {
-            // starting, simple 1-level tube
-            tube(input_z, tube_radius, thickness);
-            // 2-level tube
-            translate([0, 0, input_z]) {
-                difference() {
-                    // external shape
-                    hull() {
-                        cylinder(tube_length - input_z, r=tube_radius + thickness);
-                        translate([0, -spinner_case_add_height, 0]) cylinder(tube_length - input_z, r=tube_radius + thickness);
-                    }
-                    // internal extrusion
-                    translate([0, 0, -1]) hull() {
-                        cylinder(tube_length - input_z - thickness + 1, r=tube_radius);
-                        translate([0, -spinner_case_add_height, 0]) cylinder(tube_length - input_z - thickness + 1, r=tube_radius);
-                    }
+            // base shape for the main case
+            main_case_base_shape(case_height);
+
+            // shape for the spinner pipe
+            //
+            //        +-------------+
+            //        |             |
+            //   +....+             |
+            //   |                  |
+            //   +..................+
+            //
+            // Simple tube for the left part (attach of the spinner)
+            translate([0, spinner_start_y - thickness, tube_radius_o]) rotate([-90, 0, 0]) {
+                cylinder(attach_length + thickness, r=tube_radius_o);
+                translate([-tube_radius_o, 0, 0]) cube([2 * tube_radius_o, tube_radius_o, attach_length + thickness]); // to make the lower part square
+            }
+            // right high part of the tube
+            translate([0, input_hole_y - tube_radius, tube_radius_o]) rotate([-90, 0, 0]) {
+                hull() {
+                    cylinder(tube_length, r=tube_radius_o);
+                    translate([0, -spinner_case_add_height - tube_radius, 0]) cylinder(tube_length, r=tube_radius_o);
                 }
+                translate([-tube_radius_o, 0, 0]) cube([2 * tube_radius_o, tube_radius_o, tube_length]); // to make the lower part square
             }
         }
-        // input hole
-        translate([0, 0, input_z]) rotate([90, 0, 0]) cylinder(tube_radius * 2 + spinner_case_add_height, r=opening_size / 2);
-        // output hole
-        translate([0, 0, output_z]) rotate([-90, 0, 0]) cylinder(tube_radius * 2, r=opening_size / 2);
-        // tie
-        tie_r(tie_length, tube_radius, tie_thickness);
-    }
-    // input attach
-    difference() {
-        translate([0, 0, input_z]) rotate([90, 0, 0]) openings(tie_length, opening_size / 2, tube_radius, thickness, spinner_case_add_height - tie_length + thickness);
-        // remove the part of the upper tube to prevent stucking
-        translate([0, 0, input_z]) hull() {
-            cylinder(opening_size / 2 + thickness, r=tube_radius);
-            translate([0, -spinner_case_add_height, 0]) cylinder(opening_size / 2 + thickness, r=tube_radius);
+        // Extrude the spinner tube
+        // whole length of the spinner
+        translate([0, spinner_start_y, tube_radius_o]) rotate([-90, 0, 0]) cylinder(main_case_depth, r=tube_radius);
+        // right high part of the tube
+        translate([0, input_hole_y - tube_radius + thickness, tube_radius_o]) rotate([-90, 0, 0]) {
+            hull() {
+                cylinder(tube_length - 2 * thickness, r=tube_radius);
+                translate([0, -spinner_case_add_height - tube_radius, 0]) cylinder(tube_length - 2 * thickness, r=tube_radius);
+            }
         }
+        // remove upper part of the translated cylinder
+        translate([0, input_hole_y - tube_radius, tube_radius_o]) rotate([-90, 0, 0])
+        translate([-tube_radius_o - 1, -2 * tube_radius_o - 1 - spinner_case_add_height - tube_radius, -1])
+            cube([2 * tube_radius_o + 2, 2 * tube_radius_o + 1, tube_length + 2]);
+
+        // holes for the motor
+        translate([0, spinner_start_y - thickness, tube_radius_o]) rotate([-90, 0, 0]) {
+            // motor axis hole: make it higher for mounting the motor
+            hull() {
+                cylinder(motor_axis_len, r=motor_axis_rad * 1.5);
+                translate([0, -main_case_height, 0]) cylinder(motor_axis_len, r=motor_axis_rad * 1.5);
+            }
+            // motor case holes
+            rotate([180, 0, 0]) motor_case();
+        }
+
+        // holes for wires to the lower case
+        hole_rad = (main_case_depth / 2 + spinner_start_y - 4 * thickness) / 2;
+        translate([0, -main_case_depth / 2 + 2 * thickness + hole_rad, -1]) cylinder(case_height, r=hole_rad);
     }
     // output attach
-    translate([0, 0, output_z]) rotate([-90, 0, 0]) openings(tie_length, opening_size / 2, tube_radius, thickness, -tie_length);
+    translate([0, main_case_depth / 2, tube_radius_o]) rotate([-90, 0, 0]) {
+        tube(tie_length, tube_radius, tie_support_thickness);
+        rotate([0, 0, 90])  // rotate to ease printing
+            tie(tie_length, tube_radius + tie_support_thickness, tie_thickness);
+    }
 }

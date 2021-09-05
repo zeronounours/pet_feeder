@@ -7,7 +7,7 @@
 /***********
  * Modules *
  ***********/
-module motor(axis_length=10) {
+module motor(axis_length=motor_axis_len) {
     /*
      * Computation
      */

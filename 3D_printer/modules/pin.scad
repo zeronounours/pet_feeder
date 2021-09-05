@@ -4,7 +4,7 @@
 module rabbit_pin() {
     // extract the rabbit from the vendor stl file (remove half of it)
     translate([-30, 0, -30]) difference() {
-        import("vendor/origamix_rabbit.stl");
+        import("vendor/origamix_rabbit.stl", convexity=10);
         translate([-10, 0, 0]) cube([1000, 1000, 1000]);
     }
     // add the pin
