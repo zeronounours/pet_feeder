@@ -51,7 +51,7 @@ reduction_length = 10;
  * Main case
  */
 // length of the bonds
-main_case_tie_length = 10;
+main_case_tie_length = 5;
 
 // dimensions
 main_case_width = 170;

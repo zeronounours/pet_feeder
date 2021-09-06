@@ -78,6 +78,9 @@ module spinner_case() {
         // holes for wires to the lower case
         hole_rad = (main_case_depth / 2 + spinner_start_y - 4 * thickness) / 2;
         translate([0, -main_case_depth / 2 + 2 * thickness + hole_rad, -1]) cylinder(case_height, r=hole_rad);
+
+        // Add gaps to be able to add the above case
+        translate([0, 0, case_height]) main_case_base_shape(1);
     }
     // output attach
     translate([0, main_case_depth / 2, tube_radius_o]) rotate([-90, 0, 0]) {
