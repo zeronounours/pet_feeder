@@ -37,9 +37,9 @@ motor_axis_flat_w = 2;
 motor_axis_len = 10;
 
 // height of the motor (distance between the 2 flat edges)
-motor_height = 10;
+motor_height = 10.5;
 // width of the motor (distance between the 2 curved edges)
-motor_width = 12;
+motor_width = 12.5;
 
 // length of the motor
 motor_length = 16;
@@ -153,5 +153,16 @@ spinner_start_y = -main_case_depth / 2 + 3 * thickness + motor_case_length;
 
 // Y position of the center of the input hole (in the spinner case)
 input_hole_y =  spinner_start_y + attach_length + tube_radius;
-// length of the tube of the spinner part
+// length of the tube of the spinner part (without the attach)
 tube_length = main_case_depth / 2 - input_hole_y + tube_radius;
+
+// echo computed dimensions
+echo(total_motor_length=total_motor_length);
+echo(motor_case_length=motor_case_length);
+echo(motor_case_radius=motor_case_radius);
+echo(spring_length=spring_length);
+echo(tube_radius=tube_radius);
+echo(tube_radius_o=tube_radius_o);
+echo(spinner_start_y=spinner_start_y);
+echo(input_hole_y=input_hole_y);
+echo(tube_length=tube_length);
