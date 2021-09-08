@@ -59,9 +59,6 @@ main_case_depth = 170;
 main_case_height = opening_size + 2 * thickness;
 main_case_corner_radius = 20;
 
-// radius for the central hole
-main_case_hole_radius = 5;
-
 // supports for the arduino
 arduino_support_height = 5;
 arduino_support_radius = 6;
@@ -108,16 +105,11 @@ step = 5;
 spinner_case_add_height = 40;
 
 
-
-
 /*
  * Food container
  */
 
-// dimensions
-food_container_width = main_case_width;
-food_container_depth = food_container_width;
-food_container_slope_height = 100;
+// height for food container extension
 food_container_extension_height = 100;
 
 /*
