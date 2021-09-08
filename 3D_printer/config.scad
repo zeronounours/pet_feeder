@@ -153,6 +153,22 @@ tube_length = main_case_depth / 2 - input_hole_y + tube_radius;
 wire_hole_radius = (main_case_depth / 2 + spinner_start_y - 4 * thickness) / 2;
 wire_hole_y = -main_case_depth / 2 + 2 * thickness + wire_hole_radius;
 
+// height of the spinner case
+spinner_case_height = 2 * tube_radius + spinner_case_add_height + thickness;
+
+// Food container
+// compute height required in each direction to get slopes to reach edges
+food_slope_height_y = tan(slopes_angle) * (main_case_depth / 2 - input_hole_y - tube_radius);
+food_slope_height_my = tan(slopes_angle) * (input_hole_y - tube_radius + main_case_depth / 2);
+// the hole is center in x direction, so the height is the same in both direction
+food_slope_height_x = tan(slopes_angle) * (main_case_width / 2 - tube_radius);
+// maximum height and offset
+food_max_height = max(food_slope_height_x, food_slope_height_my, food_slope_height_y);
+food_max_offset = food_max_height / tan(slopes_angle);
+
+// height of the food casecase
+food_case_height = food_max_height + main_case_tie_length + 2;
+
 // echo computed dimensions
 echo(total_motor_length=total_motor_length);
 echo(motor_case_length=motor_case_length);
@@ -165,3 +181,10 @@ echo(input_hole_y=input_hole_y);
 echo(tube_length=tube_length);
 echo(wire_hole_radius=wire_hole_radius);
 echo(wire_hole_y=wire_hole_y);
+echo(spinner_case_height=spinner_case_height);
+echo(food_slope_height_y=food_slope_height_y);
+echo(food_slope_height_my=food_slope_height_my);
+echo(food_slope_height_x=food_slope_height_x);
+echo(food_max_height=food_max_height);
+echo(food_max_offset=food_max_offset);
+echo(food_case_height=food_case_height);
