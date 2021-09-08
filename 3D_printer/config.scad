@@ -56,7 +56,7 @@ main_case_tie_length = 5;
 // dimensions
 main_case_width = 170;
 main_case_depth = 170;
-main_case_height = opening_size + 2 * thickness;
+main_case_height = 60;
 main_case_corner_radius = 20;
 
 // supports for the arduino
@@ -148,6 +148,11 @@ input_hole_y =  spinner_start_y + attach_length + tube_radius;
 // length of the tube of the spinner part (without the attach)
 tube_length = main_case_depth / 2 - input_hole_y + tube_radius;
 
+// dimension and position of the wire holes
+//  radius is computed to fit the distance under the motor case
+wire_hole_radius = (main_case_depth / 2 + spinner_start_y - 4 * thickness) / 2;
+wire_hole_y = -main_case_depth / 2 + 2 * thickness + wire_hole_radius;
+
 // echo computed dimensions
 echo(total_motor_length=total_motor_length);
 echo(motor_case_length=motor_case_length);
@@ -158,3 +163,5 @@ echo(tube_radius_o=tube_radius_o);
 echo(spinner_start_y=spinner_start_y);
 echo(input_hole_y=input_hole_y);
 echo(tube_length=tube_length);
+echo(wire_hole_radius=wire_hole_radius);
+echo(wire_hole_y=wire_hole_y);
