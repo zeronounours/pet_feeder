@@ -7,6 +7,7 @@ include<modules/main_case.scad>;
 include<modules/pin.scad>;
 include<modules/motor_case.scad>;
 include<modules/motor.scad>;
+include<modules/bowl.scad>;
 
 
 /**************
@@ -36,6 +37,7 @@ SPLIT_DIST = 50 * SPLIT;
 translate([0, 0, 0]) {
 
     if (SHOW_MAIN_CASE && SHOW_MAIN_CASE_LOWER) color("white") main_case();
+    if (SHOW_DECORATION) %translate([0, main_case_depth / 2 + BOWL_RADIUS, -main_case_tie_length]) bowl();
 translate([0, 0, main_case_height + SPLIT_DIST]) {
 
     if (SHOW_MAIN_CASE && SHOW_MAIN_CASE_UPPER) color("white") main_case();
