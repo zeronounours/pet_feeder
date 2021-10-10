@@ -11,6 +11,7 @@ The circuit uses:
 (6V for 150RPM)
 - 2 x 6V battery holders
 - 2 x 1kR resistors
+- 1 x 200kR rotary potentiometer
 - 1 x push button
 - 1 x Green LED
 - Wires

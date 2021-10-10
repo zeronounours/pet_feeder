@@ -86,6 +86,12 @@ ifeq "$(V)" "1"
 VFLAG      =-v
 endif
 
+DEBUG      ?= 0
+DEBUGFLAG  =
+ifeq "$(DEBUG)" "1"
+DEBUGFLAG      =--build-property 'build.extra_flags="-DDEBUG"'
+endif
+
 ifndef SERIAL_DEV
   ifneq (,$(wildcard /dev/ttyUSB0))
     SERIAL_DEV = /dev/ttyUSB0
@@ -123,7 +129,7 @@ compile: $(ELF)
 .PHONY: compile
 
 $(ELF): $(SRC) $(HDRS)
-	arduino-cli compile -b $(FQBN) $(VFLAG)
+	arduino-cli compile -b $(FQBN) $(VFLAG) $(DEBUGFLAG)
 	@if which arduino-manifest.pl; \
 	then echo "---> Generating manifest.txt"; \
 	arduino-manifest.pl -b $(FQBN) $(SRC) $(HDRS) > manifest.txt; \
