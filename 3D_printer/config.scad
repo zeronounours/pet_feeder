@@ -54,16 +54,15 @@ reduction_length = 10;
 main_case_tie_length = 5;
 
 // dimensions
-main_case_width = 170;
-main_case_depth = 170;
+main_case_width = 180;
+main_case_depth = 180;
 main_case_height = 60;
 main_case_corner_radius = 20;
 
 // supports for the arduino
 arduino_support_height = 5;
-arduino_support_radius = 6;
-arduino_support_axis_height = 3;
-arduino_support_axis_radius = 1.5;
+arduino_width = 50.8 - 2.54;
+arduino_length = 96.52 - 13.97;
 
 // dimensions of the push button
 button_radius = 3.5;
@@ -131,7 +130,7 @@ motor_case_radius = sqrt(motor_height * motor_height + motor_width * motor_width
 
 
 // length of the spring part
-spring_length = main_case_depth - motor_case_length - 3 * thickness + opening_size / 3 - attach_length;
+spring_length = main_case_depth - motor_case_length - 3 * thickness;
 
 // inner radius of the spinner case tube
 tube_radius = opening_size / 2;
@@ -169,6 +168,10 @@ food_max_offset = food_max_height / tan(slopes_angle);
 // height of the food casecase
 food_case_height = food_max_height + main_case_tie_length + 2;
 
+// position for the arduino support
+arduino_support_x = main_case_width / 2 - (main_case_width / 2 - thickness - tube_radius_o - arduino_width) / 2;
+arduino_support_y = arduino_length / 4;
+
 // echo computed dimensions
 echo(total_motor_length=total_motor_length);
 echo(motor_case_length=motor_case_length);
@@ -188,3 +191,5 @@ echo(food_slope_height_x=food_slope_height_x);
 echo(food_max_height=food_max_height);
 echo(food_max_offset=food_max_offset);
 echo(food_case_height=food_case_height);
+echo(arduino_support_x=arduino_support_x);
+echo(arduino_support_y=arduino_support_y);
