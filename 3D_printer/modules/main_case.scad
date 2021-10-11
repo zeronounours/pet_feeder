@@ -1,4 +1,3 @@
-include<tie.scad>;
 include<tube.scad>;
 include<motor_case.scad>;
 

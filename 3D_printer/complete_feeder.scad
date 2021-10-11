@@ -44,6 +44,7 @@ translate([0, 0, main_case_height + SPLIT_DIST]) {
 translate([0, 0, main_case_height + SPLIT_DIST]) {
 
     if (SHOW_SPINNER_CASE) color("yellow") spinner_case();
+    if (SHOW_DECORATION) %translate([arduino_support_x, arduino_support_y, arduino_support_height]) rotate([0, 0, 180]) arduino();
     if (SHOW_DISPENSER) color("red") translate([0, main_case_depth / 2 + SPLIT_DIST, tube_radius_o]) dispenser();
 
     // only add height for what's inside the case, if in split mode
