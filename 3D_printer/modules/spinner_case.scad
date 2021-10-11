@@ -87,5 +87,20 @@ module spinner_case() {
 
         // Add gaps to be able to add the above case
         translate([0, 0, spinner_case_height]) main_case_base_shape(1);
+
+        // control panel
+        translate([main_case_width / 2 - thickness, 0, spinner_case_height / 2]) rotate([0, 90, 0]) {
+            // potentiometer hole
+            translate([0, -control_panel_interval, 0]) cylinder(thickness + 2, r=potentionmeter_radius);
+
+            // push button hole
+            translate([0, 0, button_groove / 2]) cube([button_width, button_width, button_groove], center=true);
+            translate([0, 0, button_groove]) cylinder(thickness + 2, r=button_radius);
+
+            // led hole
+            translate([0, control_panel_interval, thickness - led_groove]) cylinder(led_groove, r=led_radius);
+            translate([0, control_panel_interval, thickness / 2]) cube([led_feet_width, 2 * led_radius, thickness], center=true);
+        }
+
     }
 }

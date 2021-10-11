@@ -69,13 +69,16 @@ button_radius = 3.5;
 button_width = 11.5;
 button_groove = thickness - 0.5;
 
+// dimensions of the potentiometer
+potentionmeter_radius = 6;
+
 // dimensions of the LED
 led_radius = 2;
 led_feet_width = 1;
 led_groove = thickness / 2;
 
 // distance between push button & led
-control_panel_interval = 20;
+control_panel_interval = 40;
 
 /*
  * Spinner
