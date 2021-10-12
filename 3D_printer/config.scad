@@ -80,6 +80,9 @@ led_groove = thickness / 2;
 // distance between push button & led
 control_panel_interval = 40;
 
+// size for the hole in the lid (to open the lid
+lid_hole_radius = 15;
+
 /*
  * Spinner
  */

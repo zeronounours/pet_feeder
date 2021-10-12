@@ -8,6 +8,7 @@ include<modules/pin.scad>;
 include<modules/motor_case.scad>;
 include<modules/motor.scad>;
 include<modules/bowl.scad>;
+include<modules/lid.scad>;
 
 
 /**************
@@ -24,6 +25,7 @@ SHOW_FOOD_EXTENSION = 1;
 SHOW_DISPENSER = 1;
 SHOW_SPINNER = 1;
 SHOW_SPINNER_CASE = 1;
+SHOW_LID = 1;
 SHOW_DECORATION = 1;
 
 // whether to split pieces
@@ -61,8 +63,12 @@ translate([0, 0, spinner_case_height * (1 - SPLIT) + SPLIT_DIST]) {
     if (SHOW_FOOD_CONTAINER) color("green") food_container();
 translate([0, 0, food_case_height + SPLIT_DIST]) {
 
-    if (SHOW_FOOD_EXTENSION) color("green") food_container_extension(true);
+    if (SHOW_FOOD_EXTENSION) color("darkgreen") food_container_extension(true);
     if (SHOW_PIN) color("black") translate([main_case_width / 2 + SPLIT_DIST, 0, food_container_extension_height / 2]) rotate([0, 0, 90]) rabbit_pin();
-translate([0, 0, food_container_extension_height + SPLIT_DIST]) {
 
-}}}}}}}}
+translate([0, 0, food_container_extension_height + SPLIT_DIST]) {
+    if (SHOW_LID) color("seagreen") lid();
+
+translate([0, 0, main_case_height + SPLIT_DIST]) {
+
+}}}}}}}}}
