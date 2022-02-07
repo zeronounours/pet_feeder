@@ -89,10 +89,15 @@ lid_hole_radius = 15;
 
 // radius for the spinner (inner and outer)
 external_radius = 55 / 2;
-internal_radius = 30 / 2;
+internal_radius = 45 / 2;
+
+roller_inner_radius = 8 / 2;
+roller_outner_radius = 22 / 2;
+roller_length = 7;
+roller_edge = 1;
 
 // pitch - distance between coils (real opening)
-pitch = 25;
+pitch = 40;
 
 // length of the attach part
 attach_length = 10;
@@ -136,7 +141,9 @@ motor_case_radius = sqrt(motor_height * motor_height + motor_width * motor_width
 
 
 // length of the spring part
-spring_length = main_case_depth - motor_case_length - 3 * thickness;
+spring_length = main_case_depth + tie_length - motor_case_length - roller_length - roller_edge - 3 * thickness;
+spring_axis_length = spring_length + opening_size + 2 * roller_length - 2 * roller_edge + 2 * thickness;
+
 
 // inner radius of the spinner case tube
 tube_radius = opening_size / 2;
@@ -182,6 +189,7 @@ arduino_support_y = arduino_length / 4;
 echo(total_motor_length=total_motor_length);
 echo(motor_case_length=motor_case_length);
 echo(motor_case_radius=motor_case_radius);
+echo(spring_axis_length=spring_axis_length);
 echo(spring_length=spring_length);
 echo(tube_radius=tube_radius);
 echo(tube_radius_o=tube_radius_o);

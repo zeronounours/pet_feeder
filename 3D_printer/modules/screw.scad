@@ -13,7 +13,7 @@ wire_radius = (external_radius - internal_radius) / 2;
 // pitch of spring - real distance betweens coil centers
 real_pitch = pitch + 2 * wire_radius;
 // number of coils
-coils = (spring_length + attach_length) / real_pitch;
+coils = spring_length / real_pitch;
 
 
 /***********
@@ -50,11 +50,6 @@ module spring(radius, wire_rad, coils, pitch, step=5) {
                   m_rotate([0, atan2(sqrt(pow(p[0], 2) + pow(p[1], 2)), p[2]), 0])
                 * m_rotate([0, 0, atan2(p[1], p[0])])
                 * m_translate(p0);
-
-    function circle_points(r=1, a=0) =
-        a < 360
-           ? concat([[r * sin(a),  r * cos(a),0]], circle_points(r, a + 360 / $fn))
-           : [] ;
 
     function loop_points(step, end, t=0) =
         t <= end
@@ -112,10 +107,14 @@ module spring(radius, wire_rad, coils, pitch, step=5) {
     function reverse(v) = reverse_r(v, len(v) - 1);
 
 
-    function circle_points(r=1, a=0) =
-        a < 360
-           ? concat([[r * sin(a), r * cos(a),0]], circle_points(r, a + 360 / $fn))
-           : [] ;
+    function circle_points(r=1, i=0) =
+        let (
+            flat_a = asin(thickness / 2 / r),
+            a = flat_a + (360 - 2 * flat_a) / $fn * i
+        )
+        i <= $fn
+           ? concat([[r * sin(a), -r * cos(a), 0]], circle_points(r, i + 1))
+           : [[-thickness / 2, -radius, 0], [thickness / 2, -radius, 0]] ;
 
     function f(t) =  [radius * sin(t), radius * cos(t), pitch * t / 360 ];
 
@@ -124,7 +123,7 @@ module spring(radius, wire_rad, coils, pitch, step=5) {
            ? concat([f(t)], loop_points(step, end, t + step))
            : [] ;
 
-    section_points = circle_points(wire_rad, 360 / $fn);
+    section_points = circle_points(wire_rad);
 
     loop_points = loop_points(step, 360 * coils + step);
     tube_points = tube_points(loop_points, section_points);
@@ -134,11 +133,17 @@ module spring(radius, wire_rad, coils, pitch, step=5) {
 }
 
 module screw() {
-    translate([0, 0, wire_radius]) spring(radius, wire_radius, coils, real_pitch, step=step);
+    translate([0, 0, roller_length + roller_edge + wire_radius]) spring(radius, wire_radius, coils, real_pitch, step=step);
     difference() {
-        cylinder(attach_length, r=radius);
+        union() {
+            cylinder(spring_axis_length, r=roller_inner_radius);
+            translate([0, 0, roller_length]) {
+                cylinder(roller_edge, r=roller_inner_radius + roller_edge);
+                translate([0, 0, roller_edge]) cylinder(attach_length - roller_length, r=radius + wire_radius);
+            }
+            translate([0, 0, spring_axis_length - roller_length - roller_edge]) cylinder(roller_edge, r=roller_inner_radius + roller_edge);
+        }
         translate([0, 0, -1]) motor(axis_length=attach_length + 2);
-
     }
 }
 
