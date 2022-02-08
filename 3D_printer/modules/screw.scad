@@ -139,7 +139,7 @@ module screw() {
             cylinder(spring_axis_length, r=roller_inner_radius);
             translate([0, 0, roller_length]) {
                 cylinder(roller_edge, r=roller_inner_radius + roller_edge);
-                translate([0, 0, roller_edge]) cylinder(attach_length - roller_length, r=radius + wire_radius);
+                translate([0, 0, roller_edge]) cylinder(attach_length - roller_length - roller_edge, r=radius + wire_radius);
             }
             translate([0, 0, spring_axis_length - roller_length - roller_edge]) cylinder(roller_edge, r=roller_inner_radius + roller_edge);
         }

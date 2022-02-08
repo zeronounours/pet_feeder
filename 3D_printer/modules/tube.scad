@@ -12,3 +12,12 @@
          }
      }
  }
+
+// module to create a longer tube
+module long_tube(height, add_length, radius) {
+    hull() {
+        cylinder(height, r=radius);
+        translate([0, -add_length, 0]) cylinder(height, r=radius);
+    }
+}
+

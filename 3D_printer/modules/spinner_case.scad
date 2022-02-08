@@ -1,19 +1,12 @@
 include<tube.scad>;
 include<main_case.scad>;
+include<dispenser.scad>;
 include<motor.scad>;
 include<../vendor/arduino_mounting_library_v2/arduino.scad>;
 
 /***********
  * Modules *
  ***********/
-// module to create a longer tube
-module long_tube(height, add_length, radius) {
-    hull() {
-        cylinder(height, r=radius);
-        translate([0, -add_length, 0]) cylinder(height, r=radius);
-    }
-}
-
 // spring container
 module spinner_case() {
     difference() {
@@ -73,6 +66,9 @@ module spinner_case() {
         translate([0, input_hole_y - tube_radius - thickness, tube_radius_o]) rotate([-90, 0, 0])
         translate([-tube_radius_o - 1, -2 * tube_radius_o - 1 - spinner_case_add_height - tube_radius, -1])
             cube([2 * tube_radius_o + 2, 2 * tube_radius_o + 1, tube_length + thickness + 2]);
+
+        // holes for the dispenser plate
+        translate([0, main_case_depth / 2 - thickness, (dispenser_plate_size - thickness) / 2]) rotate([-90, 0, 0]) holes()
 
         // holes for the motor
         translate([0, spinner_start_y - thickness, tube_radius_o]) rotate([-90, 0, 0]) {

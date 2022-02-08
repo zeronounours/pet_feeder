@@ -30,7 +30,7 @@ slopes_angle = 45;
  */
 
 // radius of the motor axis
-motor_axis_rad = 1.5;
+motor_axis_rad = 1.6;
 // width of the flat part of the motor axis (type D)
 motor_axis_flat_w = 2;
 // length of the axis
@@ -127,6 +127,12 @@ food_container_extension_height = 100;
  */
 pin_radius = 1;
 
+/*
+ * Screws size
+ */
+screw_radius = 2.2; // M4
+
+
 /***************
  * Computation *
  ***************/
@@ -141,8 +147,8 @@ motor_case_radius = sqrt(motor_height * motor_height + motor_width * motor_width
 
 
 // length of the spring part
-spring_length = main_case_depth + tie_length - motor_case_length - roller_length - roller_edge - 3 * thickness;
-spring_axis_length = spring_length + opening_size + 2 * roller_length - 2 * roller_edge + 2 * thickness;
+spring_length = main_case_depth + tie_length - motor_case_length - attach_length - 3 * thickness;
+spring_axis_length = spring_length + opening_size + attach_length + roller_length + roller_edge;
 
 
 // inner radius of the spinner case tube
@@ -185,6 +191,12 @@ food_case_height = food_max_height + main_case_tie_length + 2;
 arduino_support_x = main_case_width / 2 - (main_case_width / 2 - thickness - tube_radius_o - arduino_width) / 2;
 arduino_support_y = arduino_length / 4;
 
+// outer radius of dispenser holes
+dispenser_outer_radius = tube_radius + 2 * tie_support_thickness + tie_thickness;
+
+// size of the dispenser plate
+dispenser_plate_size = 2 * dispenser_outer_radius + spinner_case_add_height - thickness;
+
 // echo computed dimensions
 echo(total_motor_length=total_motor_length);
 echo(motor_case_length=motor_case_length);
@@ -207,3 +219,5 @@ echo(food_max_offset=food_max_offset);
 echo(food_case_height=food_case_height);
 echo(arduino_support_x=arduino_support_x);
 echo(arduino_support_y=arduino_support_y);
+echo(dispenser_outer_radius=dispenser_outer_radius);
+echo(dispenser_plate_size=dispenser_plate_size);
