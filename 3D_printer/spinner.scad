@@ -1,8 +1,8 @@
 include<config.scad>;
-include<modules/screw.scad>;
+include<modules/spinner.scad>;
 
 /*************
  * 3D Models *
  *************/
-screw();
+spinner();
 translate([internal_radius / 2, 0, 30]) food();

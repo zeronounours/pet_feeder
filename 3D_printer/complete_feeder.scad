@@ -1,5 +1,5 @@
 include<config.scad>;
-include<modules/screw.scad>;
+include<modules/spinner.scad>;
 include<modules/spinner_case.scad>;
 include<modules/dispenser.scad>;
 include<modules/food_container.scad>;
@@ -53,7 +53,7 @@ translate([0, 0, main_case_height + SPLIT_DIST]) {
     // only add height for what's inside the case, if in split mode
 translate([0, 0, spinner_case_height * SPLIT + SPLIT_DIST]) {
 
-    if (SHOW_SPINNER) color("white") translate([0, spinner_start_y, tube_radius_o]) rotate([-90, 0, 0]) screw();
+    if (SHOW_SPINNER) color("white") translate([0, spinner_start_y, tube_radius_o]) rotate([-90, 0, 0]) spinner();
     if (SHOW_DECORATION) %translate([0, spinner_start_y, tube_radius_o]) roller();
     if (SHOW_DECORATION) %translate([0, spinner_end_y - roller_length, tube_radius_o]) roller();
     if (SHOW_MOTOR_CASE) color("purple") translate([0, spinner_start_y - thickness - roller_edge, tube_radius_o]) rotate([90, 0, 0]) motor_case();

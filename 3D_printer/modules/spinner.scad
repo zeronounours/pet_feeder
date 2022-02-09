@@ -132,7 +132,7 @@ module spring(radius, wire_rad, coils, pitch, step=5) {
     polyhedron(points=tube_points, faces=faces);
 }
 
-module screw() {
+module spinner() {
     translate([0, 0, roller_length + roller_edge + wire_radius]) spring(radius, wire_radius, coils, real_pitch, step=step);
     difference() {
         union() {
