@@ -88,8 +88,12 @@ lid_hole_radius = 15;
  */
 
 // radius for the spinner (inner and outer)
-external_radius = 55 / 2;
+external_radius = 55 / 2;  // should be less than opening_size / 2
 internal_radius = 45 / 2;
+
+// shorten the axis of the spinner by this value (to prevent to much overhead
+// in the cylinder which contains the roller on the dispenser - empiric)
+spinner_shorten_by = 4;
 
 roller_inner_radius = 8 / 2;
 roller_outner_radius = 22 / 2;
@@ -146,20 +150,25 @@ motor_case_length = total_motor_length + thickness;
 motor_case_radius = sqrt(motor_height * motor_height + motor_width * motor_width) / 2 + 2 * thickness;
 
 
-// length of the spring part
-spring_length = main_case_depth + tie_length - motor_case_length - attach_length - 3 * thickness;
-spring_axis_length = spring_length + opening_size + attach_length + roller_length + roller_edge;
-
-
 // inner radius of the spinner case tube
 tube_radius = opening_size / 2;
 // outer radius of the spinner case tube
 tube_radius_o = tube_radius + thickness;
 
+// outer radius of dispenser holes
+dispenser_outer_radius = tube_radius + 2 * tie_support_thickness + tie_thickness;
+
+
 // Y position of the start of the spinner (attach part)
 // Use the full size of the main case, minus the size required to place the
 // motor
-spinner_start_y = -main_case_depth / 2 + 3 * thickness + motor_case_length;
+spinner_start_y = -main_case_depth / 2 + 3 * thickness + motor_case_length + roller_edge;
+spinner_end_y = main_case_depth / 2 + tie_length + thickness + dispenser_outer_radius + tube_radius + roller_edge + roller_length - spinner_shorten_by;
+
+
+// length of the spring part
+spring_axis_length = spinner_end_y - spinner_start_y;
+spring_length = spring_axis_length - attach_length - roller_length - roller_edge - 2 * tube_radius + spinner_shorten_by;
 
 // Y position of the center of the input hole (in the spinner case)
 input_hole_y =  spinner_start_y + attach_length + tube_radius;
@@ -168,7 +177,7 @@ tube_length = main_case_depth / 2 - input_hole_y + tube_radius;
 
 // dimension and position of the wire holes
 //  radius is computed to fit the distance under the motor case
-wire_hole_radius = (main_case_depth / 2 + spinner_start_y - 4 * thickness) / 2;
+wire_hole_radius = (spinner_start_y - (-main_case_depth / 2) - roller_edge - 4 * thickness) / 2;
 wire_hole_y = -main_case_depth / 2 + 2 * thickness + wire_hole_radius;
 
 // height of the spinner case
@@ -190,9 +199,6 @@ food_case_height = food_max_height + main_case_tie_length + 2;
 // position for the arduino support
 arduino_support_x = main_case_width / 2 - (main_case_width / 2 - thickness - tube_radius_o - arduino_width) / 2;
 arduino_support_y = arduino_length / 4;
-
-// outer radius of dispenser holes
-dispenser_outer_radius = tube_radius + 2 * tie_support_thickness + tie_thickness;
 
 // size of the dispenser plate
 dispenser_plate_size = 2 * dispenser_outer_radius + spinner_case_add_height - thickness;

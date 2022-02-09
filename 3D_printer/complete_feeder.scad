@@ -53,8 +53,8 @@ translate([0, 0, main_case_height + SPLIT_DIST]) {
 translate([0, 0, spinner_case_height * SPLIT + SPLIT_DIST]) {
 
     if (SHOW_SPINNER) color("white") translate([0, spinner_start_y, tube_radius_o]) rotate([-90, 0, 0]) screw();
-    if (SHOW_MOTOR_CASE) color("purple") translate([0, spinner_start_y - thickness, tube_radius_o]) rotate([90, 0, 0]) motor_case();
-    if (SHOW_DECORATION) %translate([0, spinner_start_y - thickness, tube_radius_o]) rotate([-90, 0, 0]) motor();
+    if (SHOW_MOTOR_CASE) color("purple") translate([0, spinner_start_y - thickness - roller_edge, tube_radius_o]) rotate([90, 0, 0]) motor_case();
+    if (SHOW_DECORATION) %translate([0, spinner_start_y - thickness - roller_edge, tube_radius_o]) rotate([-90, 0, 0]) motor();
 
     // If in split mode, add a new split, else add the height of the spinner case
 translate([0, 0, 2 * tube_radius * SPLIT + SPLIT_DIST]) {

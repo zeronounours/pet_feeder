@@ -46,14 +46,14 @@ module dispenser() {
                 // curved pipe
                 dispenser_base_shape(dispenser_outer_radius, spinner_case_add_height - thickness, dispenser_outer_radius + thickness);
                 // addition for the roller at the end of the axis
-                translate([0, 0, dispenser_outer_radius + thickness]) rotate([-90, 0, 0]) cylinder(opening_size + 2 * roller_edge + roller_length + thickness, r=roller_outner_radius + thickness);
+                translate([0, 0, dispenser_outer_radius + thickness]) rotate([-90, 0, 0]) cylinder(spinner_end_y - main_case_depth / 2 - tie_length + roller_edge + thickness, r=roller_outner_radius + thickness);
             }
             // extrude inner curved pipe
             dispenser_base_shape(tube_radius, spinner_case_add_height - thickness, dispenser_outer_radius + thickness, from=-10, to=100);
             // extrude the axis for the roller
-            translate([0, 0, dispenser_outer_radius + thickness]) rotate([-90, 0, 0]) cylinder(opening_size + roller_edge + roller_length, r=roller_outner_radius);
+            translate([0, 0, dispenser_outer_radius + thickness]) rotate([-90, 0, 0]) cylinder(spinner_end_y - main_case_depth / 2 - tie_length, r=roller_outner_radius);
             // extrude the axig to create the roller edge
-            translate([0, 0, dispenser_outer_radius + thickness]) rotate([-90, 0, 0]) cylinder(opening_size + 2 * roller_edge + roller_length, r=roller_outner_radius - roller_edge);
+            translate([0, 0, dispenser_outer_radius + thickness]) rotate([-90, 0, 0]) cylinder(spinner_end_y - main_case_depth / 2 - tie_length + roller_edge , r=roller_outner_radius - roller_edge);
         }
 
         // attach part

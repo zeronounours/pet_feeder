@@ -23,7 +23,7 @@ module spinner_case() {
             //   +..................+
             //
             // Simple tube for the left part (attach of the spinner)
-            translate([0, spinner_start_y - thickness, tube_radius_o]) rotate([-90, 0, 0]) {
+            translate([0, spinner_start_y - thickness - roller_edge, tube_radius_o]) rotate([-90, 0, 0]) {
                 cylinder(attach_length + thickness, r=tube_radius_o);
                 translate([-tube_radius_o, 0, 0]) cube([2 * tube_radius_o, tube_radius_o, attach_length + thickness]); // to make the lower part square
             }
@@ -52,8 +52,15 @@ module spinner_case() {
                     standoffs(UNO, height=arduino_support_height, mountType=PIN);
         }
         // Extrude the spinner tube
-        // cylinder for the spinner
-        translate([0, spinner_start_y, tube_radius_o]) rotate([-90, 0, 0]) cylinder(main_case_depth, r=tube_radius);
+        // cylinder for the spinner composed of an place for the roller + the attach
+        translate([0, spinner_start_y - roller_edge, tube_radius_o]) rotate([-90, 0, 0]) {
+            // for the roller edge
+            cylinder(main_case_depth, r=roller_outner_radius - roller_edge);
+            // for the roller
+            translate([0, 0, roller_edge]) cylinder(main_case_depth, r=roller_outner_radius);
+            // for the spinner lower cylinder
+            translate([0, 0, roller_edge + roller_length]) cylinder(main_case_depth, r=tube_radius);
+        }
         // right high part of the tube
         translate([0, input_hole_y - tube_radius, tube_radius_o]) rotate([-90, 0, 0]) {
             long_tube(tube_length - thickness, spinner_case_add_height + tube_radius, tube_radius);
@@ -68,10 +75,10 @@ module spinner_case() {
             cube([2 * tube_radius_o + 2, 2 * tube_radius_o + 1, tube_length + thickness + 2]);
 
         // holes for the dispenser plate
-        translate([0, main_case_depth / 2 - thickness, (dispenser_plate_size - thickness) / 2]) rotate([-90, 0, 0]) holes()
+        translate([0, main_case_depth / 2 - thickness, (dispenser_plate_size - thickness) / 2]) rotate([-90, 0, 0]) holes();
 
         // holes for the motor
-        translate([0, spinner_start_y - thickness, tube_radius_o]) rotate([-90, 0, 0]) {
+        translate([0, spinner_start_y - thickness - roller_edge, tube_radius_o]) rotate([-90, 0, 0]) {
             // motor axis hole: make it higher for mounting the motor
             long_tube(motor_axis_len, main_case_height, motor_axis_rad * 1.5);
             // motor case holes
