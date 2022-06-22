@@ -1,0 +1,133 @@
+esphome:
+  name: esp32-petfeeder
+  platform: ESP32
+  board: esp32dev
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+
+ota:
+  password: !secret ota_password
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+
+  # Manuel IP
+  #manual_ip:
+  #  static_ip: 192.168.0.42
+  #  gateway: 192.168.0.1
+  #  subnet: 255.255.255.0
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "Esp32-Petfeeder Fallback Hotspot"
+    password: !secret wifi_fallback_password
+
+captive_portal:
+
+# Binary Sensor to allow motor to be switched when physical button is pressed
+binary_sensor:
+  - platform: gpio
+    id: button
+    pin:
+      number: GPIO14
+      mode:
+        input: true
+        pullup: true
+    name: 'Switch feeder'
+    on_press:
+      - switch.turn_on: motor_forward
+
+  - platform: status
+    name: "Status"
+
+switch:
+# Switch to turn feeder on for 3 seconds/off and turn on/off LED
+  - platform: gpio
+    name: 'Motor feeder'
+    id: motor_forward
+    pin: GPIO27
+    on_turn_on:
+      - output.turn_off: motor_backward
+      - light.turn_on: activity_led
+      - number.set:
+          id: feed_count
+          value: !lambda "return id(feed_count).state + 1;"
+      - delay: !lambda "return id(feed_duration).state * 1000;"
+      - switch.turn_off: motor_forward
+      - light.turn_off: activity_led
+      # run in backward for a short duration
+      # UNCOMMENT THE 3 LINES BELOW TO RUN BACKWARD AT THE END
+      #- output.turn_on: motor_backward
+      #- delay: !lambda "return id(feed_duration).state * 500;"
+      #- output.turn_off: motor_backward
+    restore_mode: ALWAYS_OFF
+
+sensor:
+# Sensor for the potentiometer for the duration to control motor
+  - platform: adc
+    pin: GPIO32
+    id: pot_feed_duration
+    name: "Potentiometer feed duration"
+    unit_of_measurement: 'seconds'
+    update_interval: 1s
+    # to read full range of 3.3v
+    attenuation: auto
+    filters:
+      - calibrate_linear:
+          # Transfor the voltage range 0 to 3.3 to duration 0 to 10s
+          - 0.0 -> 0.0
+          - 3.3 -> 10.0
+      # only change the value when the significant change happens
+      - delta: 0.5
+    # on value change, update the number holding the duration
+    on_value:
+      then:
+        - number.set:
+            id: feed_duration
+            value: !lambda "return x;"
+
+
+# To allow led to be controlled via GPIO
+output:
+  - platform: gpio
+    id: green_led
+    pin:
+      number: GPIO12
+  # Pin to run the motor backward
+  - platform: gpio
+    id: motor_backward
+    pin:
+      number: GPIO26
+
+# LED control
+light:
+  - platform: binary
+    output: green_led
+    id: activity_led
+
+number:
+  # number of seconds to rotate
+  - platform: template
+    name: "feed duration"
+    id: feed_duration
+    unit_of_measurement: 'seconds'
+    min_value: 0
+    max_value: 30
+    step: 0.1
+    initial_value: 10
+    restore_value: true
+    optimistic: true
+  # counter for number of feed
+  - platform: template
+    name: "Feed count"
+    id: feed_count
+    min_value: 0
+    max_value: 1000000000
+    step: 1
+    initial_value: 0
+    restore_value: true
+    optimistic: true
