@@ -136,6 +136,17 @@ pin_radius = 1;
  */
 screw_radius = 2.2; // M4
 
+/*
+ * Motor attach dimensions
+ */
+motor_attach_base_rad = 11;
+motor_attach_attach_rad = 5;
+motor_attach_motor_hole_rad = 1.5;
+motor_attach_hole_rad = 1.5;
+motor_attach_hole_position_radius = 8;
+motor_attach_total_height = 13;
+motor_attach_base_height = 2;
+
 
 /***************
  * Computation *
@@ -167,7 +178,7 @@ spinner_end_y = main_case_depth / 2 + tie_length + thickness + dispenser_outer_r
 
 
 // length of the spring part
-spring_axis_length = spinner_end_y - spinner_start_y;
+spring_axis_length = spinner_end_y - spinner_start_y - motor_attach_total_height;
 spring_length = spring_axis_length - attach_length - roller_length - roller_edge - 2 * tube_radius + spinner_shorten_by;
 
 // Y position of the center of the input hole (in the spinner case)

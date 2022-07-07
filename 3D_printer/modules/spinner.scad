@@ -133,17 +133,34 @@ module spring(radius, wire_rad, coils, pitch, step=5) {
 }
 
 module spinner() {
-    translate([0, 0, roller_length + roller_edge + wire_radius]) spring(radius, wire_radius, coils, real_pitch, step=step);
+    // spring
+    rotate([0, 0, 45]) translate([0, 0, wire_radius]) spring(radius, wire_radius, coils, real_pitch, step=step);
+    // axis
+    cylinder(spring_axis_length, r=roller_inner_radius);
+    // edge for roller
+    hull() {
+        // make it in a shape of a cone to be printable
+        translate([0, 0, spring_axis_length - roller_length - roller_edge]) cylinder(roller_edge, r=roller_inner_radius + roller_edge);
+        translate([0, 0, spring_axis_length - roller_length - 2 * roller_edge]) cylinder(roller_edge, r=roller_inner_radius);
+    }
+    // base
     difference() {
-        union() {
-            cylinder(spring_axis_length, r=roller_inner_radius);
-            translate([0, 0, roller_length]) {
-                cylinder(roller_edge, r=roller_inner_radius + roller_edge);
-                translate([0, 0, roller_edge]) cylinder(attach_length - roller_length - roller_edge, r=radius + wire_radius);
+        union () {
+            // base with holes
+            cylinder(thickness, r=radius + wire_radius);
+            // edges going back
+            back_length = motor_attach_total_height - attach_length + roller_edge;
+            translate([0, 0, -back_length]) difference() {
+                cylinder(back_length, r=radius + wire_radius);
+                translate([0, 0, -1]) cylinder(back_length + 2, r=radius + wire_radius - thickness);
             }
-            translate([0, 0, spring_axis_length - roller_length - roller_edge]) cylinder(roller_edge, r=roller_inner_radius + roller_edge);
         }
-        translate([0, 0, -1]) motor(axis_length=attach_length + 2);
+        // holes on the base to match motor_attach holes
+        for(i=[0:3]) {
+            rotate([0, 0, 90 * i])
+                translate([0, motor_attach_hole_position_radius, -1])
+                cylinder(thickness + 2, r=motor_attach_hole_rad);
+        }
     }
 }
 

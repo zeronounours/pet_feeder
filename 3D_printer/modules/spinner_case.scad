@@ -52,14 +52,10 @@ module spinner_case() {
                     standoffs(UNO, height=arduino_support_height, mountType=PIN);
         }
         // Extrude the spinner tube
-        // cylinder for the spinner composed of an place for the roller + the attach
+        // cylinder for the attach part
         translate([0, spinner_start_y - roller_edge, tube_radius_o]) rotate([-90, 0, 0]) {
-            // for the roller edge
-            cylinder(main_case_depth, r=roller_outner_radius - roller_edge);
-            // for the roller
-            translate([0, 0, roller_edge]) cylinder(main_case_depth, r=roller_outner_radius);
-            // for the spinner lower cylinder
-            translate([0, 0, roller_edge + roller_length]) cylinder(main_case_depth, r=tube_radius);
+            // remove the size of the motor attach with a slight gap
+            cylinder(main_case_depth, r=motor_attach_base_rad + 0.1);
         }
         // right high part of the tube
         translate([0, input_hole_y - tube_radius, tube_radius_o]) rotate([-90, 0, 0]) {
